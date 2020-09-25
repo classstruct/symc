@@ -1,4 +1,4 @@
-#include"/storage/emulated/0/0/tao.h"
+#include"tao.h"
 int main()
 {
 	char inputstr[200];
