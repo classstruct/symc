@@ -13,6 +13,8 @@
 #define MENB2 4					// 假参数位2
 #define MSTA 5					// 符号头
 #define MEND 6					// 符号尾
+#define pi 3.141596253589793238462643383279
+#define e 2.718281828459045235360287471352
 using namespace std;
 const int kts[6] = { 82, 216, 27, 272, 27, 216 };
 
@@ -365,6 +367,14 @@ void strabcpy(char *a, char *b, int st, int en)
 	}
 }
 
+/* void funcs::addtimop(char*a,char*b) { *(a++) = *b; for (int i = 1; i <
+   strlen(b); i++) {
+
+   if ((isdigit(b[i - 1]) ||va_cmp(b[i - 1])) && (b[i] == '(' ||
+   islower(b[i]))) { *a++ = '*'; }
+
+   else *a++ = *(b+ i); } cout<<endl<<"this is "<<a<<endl;
+   }//为b处理add*号，并给a */
 bool have(char *a, char b)
 {
 	bool c = 0;
@@ -379,6 +389,7 @@ funcs funcs::singleder(char a)
 	char left[10], right[10];
 	strabcpy(left, show, order[t - 1][STA], order[t - 1][MSTA] - 1);
 	strabcpy(right, show, order[t - 1][MEND] + 1, order[t - 1][END]);
+	cout << "left is " << left << endl << "right is " << right << endl;
 	funcs f1(left, va_num, variable);
 	funcs f2(right, va_num, variable);
 	funcs f;
@@ -613,8 +624,24 @@ void funcs::pp(int s, int i, int j)
 		}
 }
 
-funcs::funcs(char r[], short _va_num, char va[])
+funcs::funcs(char pa[], short _va_num, char va[])
 {
+	char r[200];
+	r[0] = pa[0];
+	int de=0;
+	for (int i = 1; i < strlen(pa); i++)
+	{
+
+		if ((isdigit(pa[i - 1]) || va_cmp(pa[i - 1])) && (pa[i] == '(' || islower(pa[i])))
+		{
+			r[i+de]= '*';de++;
+			r[i+de]=pa[i];
+		}
+
+		else
+			r[i+de] = pa[i];
+	}
+	cout << endl << "this is " << r << endl;
 	va_num = _va_num;
 	strcpy(variable, va);
 	strcpy(show, "(");
@@ -630,14 +657,6 @@ funcs::funcs(char r[], short _va_num, char va[])
 	{
 		isud[n] = 0;
 		loc[n][0] = i + 1;
-		if (i)
-		{
-			if ((isdigit(r[i - 1]) || va_cmp(r[i - 1])) && (r[i] == '(' || islower(r[i])))
-			{
-				nas[n] = 41;
-				type[n++] = 3;
-			}
-		}
 		if (islower(r[i]) && va_cmp(r[i]) == 0)
 		{
 			if (compstr(i, r, "acos"))
