@@ -68,6 +68,7 @@ class funcs
 	char dig[LEN][10];
 	short isud[LEN];
 	double _value[10];
+	short maxop;//优先度
 
 };
 inline int compstr(int n, char a[], const char rt[])
@@ -371,7 +372,7 @@ void strabcpy(char *a, char *b, int st, int en)
 {
 	int i = m;
 	while ((*a++ = *(b + i)) && i++ < n);
-}仅用于测试，但出现segfault*/
+}//仅用于测试，但出现segfault*/
 bool have(char *a, char b)
 {
 	bool c = 0;
