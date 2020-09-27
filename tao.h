@@ -367,14 +367,11 @@ void strabcpy(char *a, char *b, int st, int en)
 	}
 }
 
-/* void funcs::addtimop(char*a,char*b) { *(a++) = *b; for (int i = 1; i <
-   strlen(b); i++) {
-
-   if ((isdigit(b[i - 1]) ||va_cmp(b[i - 1])) && (b[i] == '(' ||
-   islower(b[i]))) { *a++ = '*'; }
-
-   else *a++ = *(b+ i); } cout<<endl<<"this is "<<a<<endl;
-   }//为b处理add*号，并给a */
+/*void strabcpy(char a[], char b[], int m, int n)
+{
+	int i = m;
+	while ((*a++ = *(b + i)) && i++ < n);
+}仅用于测试，但出现segfault*/
 bool have(char *a, char b)
 {
 	bool c = 0;
@@ -389,7 +386,6 @@ funcs funcs::singleder(char a)
 	char left[10], right[10];
 	strabcpy(left, show, order[t - 1][STA], order[t - 1][MSTA] - 1);
 	strabcpy(right, show, order[t - 1][MEND] + 1, order[t - 1][END]);
-	cout << "left is " << left << endl << "right is " << right << endl;
 	funcs f1(left, va_num, variable);
 	funcs f2(right, va_num, variable);
 	funcs f;
@@ -629,6 +625,8 @@ funcs::funcs(char pa[], short _va_num, char va[])
 	char r[200];
 	r[0] = pa[0];
 	int de=0;
+	va_num = _va_num;
+	strcpy(variable, va);
 	for (int i = 1; i < strlen(pa); i++)
 	{
 
@@ -641,9 +639,6 @@ funcs::funcs(char pa[], short _va_num, char va[])
 		else
 			r[i+de] = pa[i];
 	}
-	cout << endl << "this is " << r << endl;
-	va_num = _va_num;
-	strcpy(variable, va);
 	strcpy(show, "(");
 	strcat(show, r);
 	strcat(show, ")");
@@ -829,6 +824,7 @@ funcs::funcs(char pa[], short _va_num, char va[])
 		loc[n][1] = i;
 		val[n++] = 0;
 	}
+	
 	type[n] = 4;
 	nas[n] = 32;
 	isud[n] = 0;
@@ -931,6 +927,9 @@ funcs::funcs(char pa[], short _va_num, char va[])
 			}
 		}
 	}
+	for(int q=0;q<=n;q++)
+	cout<<nas[q]<<endl;
+	//以上两行删去以后会报错segfault以及诸多错误，尚未知原因，可能是编译器问题
 }
 
 double funcs::loop_n(short n, double start[], double end[])
